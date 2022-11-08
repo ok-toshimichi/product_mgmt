@@ -16,7 +16,7 @@ class CreateSalesTable extends Migration
         if (!Schema::hasTable('sales')) {
             Schema::create('sales', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->foreignId('product_id');
+                $table->unsignedBigInteger('product_id');
                 $table->timestamps();
                 $table->foreign('product_id')->refereneces('id')->on('products')->onDelete('cascade');
             });

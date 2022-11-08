@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
         if (!Schema::hasTable('products')) {
             Schema::create('products', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->foreignId('company_id'); // 外部キー
+                $table->unsignedBigInteger('company_id'); // 外部キー
                 $table->string('product_name', 100);
                 $table->integer('price');
                 $table->integer('stock');
