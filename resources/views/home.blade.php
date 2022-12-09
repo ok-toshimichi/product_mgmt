@@ -13,11 +13,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    <a href="{{ route('product.lineup') }}">You are logged in!</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+<!-- trait_exists -->
