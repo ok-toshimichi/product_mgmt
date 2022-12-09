@@ -14,7 +14,6 @@
                             class="form-control mr-sm-2"
                             name="keyword"
                             placeholder="キーワードを入力"
-                            value="{{ $data['keyword'] }}"
                         >
                     </div>
                     {{-- ↑キーワード検索部分↑ --}}
