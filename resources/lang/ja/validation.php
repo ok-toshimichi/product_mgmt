@@ -147,7 +147,11 @@ return [
 
     'attributes' => [
         'email' => 'メールアドレス',
-	'password' => 'パスワード',
+        'password' => 'パスワード',
+        'company_id' => 'メーカー',
+        'product_name' => '商品名',
+        'price' => '価格',
+        'stock' => '在庫数',
     ],
 
 ];
