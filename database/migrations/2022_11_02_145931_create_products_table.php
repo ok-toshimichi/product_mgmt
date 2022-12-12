@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
                 $table->integer('price');
                 $table->integer('stock');
                 $table->text('comment')->nullable(); // null許可
-                $table->string('image_path')->nullable();
+                $table->string('image')->nullable();
                 $table->timestamps();
                 // 外部キー制約
                 $table->foreign('company_id')->refereneces('id')->on('companies')->onDelete('cascade');
