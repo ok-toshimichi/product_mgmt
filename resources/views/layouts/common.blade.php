@@ -8,7 +8,7 @@
         <script src="/js/app.js" defer></script>
         
         <!-- 自作のjsファイルも読み込ませることができます -->
-        <script src="/js/alert.js"></script>
+        <script src="{{ asset('/js/alert.js') }}"></script>
     </head>
     <body>
         <header>
