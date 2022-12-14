@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <h2>商品一覧</h2>
             <div class="form-group mt-3">
-                <form  method="GET" action="{{ route('product.lineup') }}" id="searchForm" class="form-inline my-2 my-lg-0">
+                <form  method="GET" action="{{ route('product.search') }}" id="searchForm" class="form-inline my-2 my-lg-0">
                     {{-- ↓キーワード検索部分↓ --}}
                     <div class="search-form">
                         <input
@@ -14,6 +14,7 @@
                             class="form-control mr-sm-2"
                             name="keyword"
                             placeholder="キーワードを入力"
+                            value=""
                         >
                     </div>
                     {{-- ↑キーワード検索部分↑ --}}
