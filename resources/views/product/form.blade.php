@@ -56,7 +56,7 @@
 
             <div class="form-group">
                 <label for="price">
-                    価格
+                    価格（半角数字のみ）
                 </label>
                 <input
                     name="price"
@@ -73,7 +73,7 @@
 
             <div class="form-group">
                 <label for="stock">
-                    在庫数
+                    在庫数（半角数字のみ）
                 </label>
                 <input
                     name="stock"
