@@ -29,8 +29,8 @@ class ProductRequest extends FormRequest
             // DBと同様の設定が好ましいです(varchar(255)みたいなのがあるはず)
             'company_id' => 'required | max:20',
             'product_name' => 'required | max:100',
-            'price' => 'required | max:2000',
-            'stock' => 'required | max:300',
+            'price' => ['required', 'max:2000', 'regex:/^[0-9]+$/'],
+            'stock' => ['required', 'max:300', 'regex:/^[0-9]+$/'],
             'comment' => 'max:255'
         ];
     }
