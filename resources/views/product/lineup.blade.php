@@ -46,6 +46,43 @@
                 </form>
             </div>
 
+            {{-- ↓非同期検索↓ --}}
+            <div class="form-group mt-3">
+                <div class="form-inline my-2 my-lg-0">
+                    <div class="search-form">
+                        <input
+                            type="text"
+                            class="search_product form-control mr-sm-2"
+                            name="keyword"
+                            placeholder="キーワードを入力"
+                            value=""
+                        >
+                    </div>
+
+                    <div class="search-dropDown">
+                        <select class="company_num" name="company_id">
+                            <option value="">メーカーを選択してください</option>
+                            @foreach($data['company_data'] as $company_info)
+                                @if (request('company_id') == $company_info->id)
+                                    <option id="company_id" class="company_num" name="company_id" value="{{ $company_info->id }}" selected>
+                                        {{ $company_info->company_name }}
+                                    </option>
+                                @else
+                                    <option id="company_id" class="company_num" name="company_id" value="{{ $company_info->id }}">
+                                        {{ $company_info->company_name }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="search-btn ml-2">
+                        <button class="btn btn-secondary search-icon" type="button">商品を探す（非同期）</button>
+                    </div>
+                </div>
+            </div>
+            {{-- ↑非同期検索↑ --}}
+
             {{-- ↓なんらかのメッセージを表示する部分↓ --}}
             @if (session('err_msg'))
                 <p class="text-danger">{{ session('err_msg') }}</p>

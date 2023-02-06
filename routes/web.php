@@ -24,6 +24,7 @@ use App\Http\Controllers\Product\showEdit;
 use App\Http\Controllers\Product\exeStore;
 use App\Http\Controllers\Product\exeUpdate;
 use App\Http\Controllers\Product\exeDelete;
+use App\Http\Controllers\Product\exeAsyncSearch;
 
 // 最初のページはログイン完了しました！の画面(ただし、その画面はユーザー認証ありきなので、ログイン画面に飛びます)
 Route::get('/', 'HomeController@index')->name('root');
@@ -46,6 +47,9 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth'], function (){
 
     // 商品検索
     Route::get('search', Product\exeSearch::class)->name('product.search');
+
+    // 非同期検索
+    Route::get('asyncSearch/{keyword}/{selected_name}', Product\exeAsyncSearch::class)->name('product.asyncSearch');
 
     // 登録画面の表示
     Route::get('create', Product\showCreate::class)->name('product.create');
