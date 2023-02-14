@@ -12,10 +12,10 @@ class exeAsyncSearch extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param $keyword, $selected_name
+     * @param Request $request
      * @return json
      */
-    public function __invoke($keyword, $selected_name)
+    public function __invoke(Request $request)
     {
         // 箱  : $product_instanceという名前の変数(function同様に、中身が分かるものがよい)
         // 中身: Productクラス(Product.php)のインスタンス
@@ -25,16 +25,19 @@ class exeAsyncSearch extends Controller
         // 中身: Companyクラス(Company.php)のインスタンス
         $company_instance = new Company();
 
+        $keyword = $request->keyword;
+        $selected_name = $request->selected_name;
+
         // try catchを入れることで、正常な処理の時はtryを。エラーがあった際のみcatchに書いた内容が実行されます
         try {
 
             // 箱  ： $product_listという名前の変数(function同様に、中身が分かるものがよい)
             // 中身： Product.phpのsearchProductByParamsにアクセス
-            $product_list = $product_instance->searchProductByParams($keyword, $selected_name);
+            $product_list = $product_instance->asyncSearchProductByParams($keyword, $selected_name);
 
             // 箱  ： $company_dataという名前の変数(function同様に、中身が分かるものがよい)
             // 中身： Company.phpのcompanyInfoにアクセス
-            $company_data = $company_instance->companyInfo();
+            // $company_data = $company_instance->companyInfo();
 
         } catch (\Throwable $e) {
             // 何らかのエラーが起きた際は、こちらの処理を実行
@@ -44,13 +47,13 @@ class exeAsyncSearch extends Controller
             throw new \Exception($e->getMessage());
         }
 
-        $data = [
-            'product_list' => $product_list,
-            'company_data' => $company_data,
-            'keyword'      => $keyword,
-        ];
+        // $data = [
+        //     'product_list' => $product_list,
+        //     'company_data' => $company_data,
+        //     'keyword'      => $keyword,
+        // ];
 
         // このとき変数に$は付ける？
-        return response()->json($data);
+        return response()->json($product_list);
     }
 }

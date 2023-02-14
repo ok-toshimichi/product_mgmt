@@ -5,6 +5,14 @@
     <div class="row">
         <div class="col-md-12">
             <h2>商品一覧</h2>
+            <table class="product-table tbody">
+                <thead>
+                    
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
             <div class="form-group mt-3">
                 <form  method="GET" action="{{ route('product.search') }}" id="searchForm" class="form-inline my-2 my-lg-0">
                     {{-- ↓キーワード検索部分↓ --}}

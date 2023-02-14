@@ -49,7 +49,8 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth'], function (){
     Route::get('search', Product\exeSearch::class)->name('product.search');
 
     // 非同期検索
-    Route::get('asyncSearch/{keyword}/{selected_name}', Product\exeAsyncSearch::class)->name('product.asyncSearch');
+    // Route::get('asyncSearch/{keyword}/{selected_name}', Product\exeAsyncSearch::class)->name('product.asyncSearch');
+    Route::get('asyncSearch', Product\exeAsyncSearch::class)->name('product.asyncSearch');
 
     // 登録画面の表示
     Route::get('create', Product\showCreate::class)->name('product.create');

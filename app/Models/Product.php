@@ -153,6 +153,49 @@ class Product extends Model
 
 
     /**
+     * 非同期検索
+     *
+     * @param [type] $keyword
+     * @param [type] $company_name
+     * @return $result
+     */
+    public function asyncSearchProductByParams($keyword, $company_name) {
+        // 変数$queryの中身は、Product.phpのjoinAndSelectメソッドでreturnされている$sql
+        // つまり、join文とselect文
+        $query = $this->joinAndSelect();
+
+        // もし$keywordが空っぽでなければ = キーワードを入力して検索ボタン押したら
+        if (!empty($keyword)) {
+            // select文の続き
+            // where文で絞り込みます(入力されたキーワード($keyword)の文字列を含む、product_name)
+            $query->where('products.product_name', 'LIKE', '%'.$keyword.'%');
+        }
+        // もし$company_nameが空っぽでなければ = メーカー名を選んで検索ボタンを押したら
+        if (!empty($company_name)) {
+            // select文の続き
+            // where文で絞り込みます(選択されたメーカー名($company_name)の、company_id)
+            $query->where('products.company_id', $company_name);
+        }
+        // もし$keywordが空っぽでないかつ、$company_nameも空っぽでない場合
+        // つまり、キーワード入力とメーカー名選択の両方を行って検索ボタンを押したら
+        if (!empty($keyword) && !empty($company_name)) {
+            // select文の続き
+            // where文で何を絞り込んでいるかは...もう分かるな？
+            $query->where('products.product_name', 'LIKE', '%'.$keyword.'%')
+                ->where('products.company_id', $company_name);
+        }
+
+        // $resultという変数(箱)に、$query(where文の続き)を入れてあげます
+        // orderByでproductsテーブルのidカラム降順にして
+        $result = $query->orderBy('products.id', 'desc')->get();
+
+        // オブジェクトとして扱えるようにします
+        // asyncSearchProductByParamsが呼び出すと、$resultがもらえるよ
+        return $result;
+    }
+
+
+    /**
      * 商品情報の詳細データ
      *
      * @param $id
