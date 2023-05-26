@@ -157,9 +157,13 @@ class Product extends Model
      *
      * @param [type] $keyword
      * @param [type] $company_name
+     * @param [type] $lowest_price
+     * @param [type] $highest_price
+     * @param [type] $minimum_number
+     * @param [type] $maximum_number
      * @return $result
      */
-    public function asyncSearchProductByParams($keyword, $company_name) {
+    public function asyncSearchProductByParams($keyword, $company_name, $lowest_price, $highest_price, $minimum_number, $maximum_number) {
         // 変数$queryの中身は、Product.phpのjoinAndSelectメソッドでreturnされている$sql
         // つまり、join文とselect文
         $query = $this->joinAndSelect();
@@ -176,13 +180,29 @@ class Product extends Model
             // where文で絞り込みます(選択されたメーカー名($company_name)の、company_id)
             $query->where('products.company_id', $company_name);
         }
-        // もし$keywordが空っぽでないかつ、$company_nameも空っぽでない場合
-        // つまり、キーワード入力とメーカー名選択の両方を行って検索ボタンを押したら
-        if (!empty($keyword) && !empty($company_name)) {
+        // もし$lowest_priceが空っぽでなければ = 下限価格を入力して検索ボタンを押したら
+        if (!empty($lowest_price)) {
             // select文の続き
-            // where文で何を絞り込んでいるかは...もう分かるな？
-            $query->where('products.product_name', 'LIKE', '%'.$keyword.'%')
-                ->where('products.company_id', $company_name);
+            // where文で絞り込みます(入力された下限価格($lowest_price)以上の、price)
+            $query->where('products.price', '>=', $lowest_price);
+        }
+        // もし$highest_priceが空っぽでなければ = 上限価格を入力して検索ボタンを押したら
+        if (!empty($highest_price)) {
+            // select文の続き
+            // where文で絞り込みます(入力された上限価格($highest_price)以下の、price)
+            $query->where('products.price', '<=', $highest_price);
+        }
+        // もし$minimum_numberが空っぽでなければ = 下限在庫数を入力して検索ボタンを押したら
+        if (!empty($minimum_number)) {
+            // select文の続き
+            // where文で絞り込みます(入力された下限在庫数($minimum_number)以上の、stock)
+            $query->where('products.stock', '>=', $minimum_number);
+        }
+        // もし$maximum_numberが空っぽでなければ = 上限在庫数を入力して検索ボタンを押したら
+        if (!empty($maximum_number)) {
+            // select文の続き
+            // where文で絞り込みます(入力された上限在庫数($maximum_number)以下の、stock)
+            $query->where('products.stock', '<=', $maximum_number);
         }
 
         // $resultという変数(箱)に、$query(where文の続き)を入れてあげます

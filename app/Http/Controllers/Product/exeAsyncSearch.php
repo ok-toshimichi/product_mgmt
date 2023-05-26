@@ -27,13 +27,17 @@ class exeAsyncSearch extends Controller
 
         $keyword = $request->keyword;
         $selected_name = $request->selected_name;
+        $lowest_price = $request->lowest_price;
+        $highest_price = $request->highest_price;
+        $minimum_number = $request->minimum_number;
+        $maximum_number = $request->maximum_number;
 
         // try catchを入れることで、正常な処理の時はtryを。エラーがあった際のみcatchに書いた内容が実行されます
         try {
 
             // 箱  ： $product_listという名前の変数(function同様に、中身が分かるものがよい)
             // 中身： Product.phpのsearchProductByParamsにアクセス
-            $product_list = $product_instance->asyncSearchProductByParams($keyword, $selected_name);
+            $product_list = $product_instance->asyncSearchProductByParams($keyword, $selected_name, $lowest_price, $highest_price, $minimum_number, $maximum_number);
 
             // 箱  ： $company_dataという名前の変数(function同様に、中身が分かるものがよい)
             // 中身： Company.phpのcompanyInfoにアクセス

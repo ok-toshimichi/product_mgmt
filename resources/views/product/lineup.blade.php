@@ -5,12 +5,55 @@
     <div class="row">
         <div class="col-md-12">
             <h2>商品一覧</h2>
-            <table class="product-table tbody">
+            <table class="table product-table tbody table-striped sort-table">
                 <thead>
-                    
+                    <tr>
+                        <th>商品ID</th>
+                        <th>商品画像</th>
+                        <th>商品名</th>
+                        <th>価格</th>
+                        <th>在庫数</th>
+                        <th>メーカー名</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
-
+                    @forelse($data['product_list'] as $product)
+                        <tr>
+                            <td>{{ $product->id }}</td>
+                            <td>
+                                {{-- imageは入力必須でないので、画像投稿しなかった場合のことも考えてあげる --}}
+                                @if ($product->image === null)
+                                    {{-- noimage.pngという名前の適当な画像を用意して、storageディレクトリ内に置いておく --}}
+                                    <img class="w-25 h-25" src="/storage/noimage.png">
+                                @else
+                                    {{-- 画像投稿があった場合は、投降した画像を表示する --}}
+                                    <img class="w-25 h-25" src="{{ asset( '/storage'.$product->image ) }}">
+                                @endif
+                            </td>
+                            <td>{{ $product->product_name }}</td>
+                            <td>{{ $product->price }}円</td>
+                            <td>{{ $product->stock }}</td>
+                            <td>{{ $product->company_name }}</td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-info"
+                                    onclick="location.href='/product/{{ $product->id }}'"
+                                >詳細</button>
+                            </td>
+                            <form method="POST" action="{{ route('product.delete', $product->id) }}" onSubmit="return checkDelete()">
+                                @csrf
+                                <td>
+                                    <button type="submit" class="btn btn-danger" onclick="">削除</button>
+                                </td>
+                            </form>
+                        </tr>
+                    @empty
+                        {{-- '登録されている商品がまだありません。'というメッセージを表示します --}}
+                        <p class="text-danger">{{ config('message.message5') }}</p>
+                    @endforelse
                 </tbody>
             </table>
             <div class="form-group mt-3">
@@ -82,6 +125,40 @@
                                 @endif
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="PriceSearch">
+                        <div class="Header" title="商品価格">
+                            <span>商品価格</span>
+                        </div>
+                        <div class="Content">
+                            <div class="InlineFields">
+                                <div class="Field">
+                                    <input type="number" class="LowestPrice" placeholder="円（下限）" maxlength="5" value="">
+                                </div>
+                                <div class="Field Separater">〜</div>
+                                <div class="Field">
+                                    <input type="number" class="HighestPrice" placeholder="円（上限）" maxlength="5" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="StockSearch">
+                        <div class="Header" title="在庫数">
+                            <span>在庫数</span>
+                        </div>
+                        <div class="Content">
+                            <div class="InlineFields">
+                                <div class="Field">
+                                    <input type="number" class="MinimumNumber" placeholder="個（下限）" maxlength="5" value="">
+                                </div>
+                                <div class="Field Separater">〜</div>
+                                <div class="Field">
+                                    <input type="number" class="MaximumNumber" placeholder="個（上限）" maxlength="5" value="">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="search-btn ml-2">

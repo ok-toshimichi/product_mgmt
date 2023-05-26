@@ -4,10 +4,10 @@ window.addEventListener('DOMContentLoaded', function () {
 
     let keyword = $('.search_product').val();
     let selected_name = $('.company_num').val();
-
-    if (!keyword && !selected_name) {
-      return false;
-    }
+    let lowest_price = $(`.LowestPrice`).val();
+    let highest_price = $(`.HighestPrice`).val();
+    let minimum_number = $(`.MinimumNumber`).val();
+    let maximum_number = $(`.MaximumNumber`).val();
 
     $.ajax({
       type: 'GET',
@@ -15,6 +15,10 @@ window.addEventListener('DOMContentLoaded', function () {
       data: {
         'keyword': keyword,
         'selected_name': selected_name,
+        'lowest_price': lowest_price,
+        'highest_price': highest_price,
+        'minimum_number': minimum_number,
+        'maximum_number': maximum_number,
       },
       dataType: 'json',
 
