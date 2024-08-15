@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <h2>商品一覧</h2>
-            <table class="table product-table tbody table-striped sort-table">
+            <table class="table product-table tbody table-striped tablesorter">
                 <thead>
                     <tr>
                         <th>商品ID</th>

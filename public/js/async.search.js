@@ -28,6 +28,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
       //再検索時に以前の検索結果を消す
       $('.product-table tbody').children().remove();
+      $('.text-center mt-5 search-null').remove();
 
       let html = '';
 
@@ -56,10 +57,14 @@ window.addEventListener('DOMContentLoaded', function () {
         `;
 
         $('.product-table tbody').append(html);
+
+        $(function() {
+          $(".tablesorter").tablesorter();
+        });
       });
 
       // 検索結果がなかったときの処理
-      if (data.length === 0) {
+      if (!data.length) {
         $('.product-table tbody').after('<p class="text-center mt-5 search-null">商品が見つかりません</p>');
       }
 
@@ -70,6 +75,10 @@ window.addEventListener('DOMContentLoaded', function () {
       console.log("errorThrown    : " + errorThrown.message);
     });
 
+  });
+
+  $(function() {
+    $(".tablesorter").tablesorter();
   });
 
 });
